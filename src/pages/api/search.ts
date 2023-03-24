@@ -1,16 +1,15 @@
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
-import protocol from '@/store/protocolLink';
-
+import { useProtocolStore } from '@/store/useProtocolStore';
 interface SearchResult {
   id: number;
   title: string;
   slug: string;
 }
-
 interface SearchResponse {
   topics: SearchResult[];
 }
+const { protocol } = useProtocolStore();
 
 export default async function handler(
   req: NextApiRequest,
@@ -19,7 +18,7 @@ export default async function handler(
   try {
     const { term } = req.query;
     const response = await axios.get<SearchResponse>(
-      `${protocol["uniswap"]}/search.json?q=${term}&page=0`
+      `${protocol.link}/search.json?q=${term}&page=0`
     );
 
     const searchResults: SearchResult[] = response.data.topics.map((topic) => ({
