@@ -1,7 +1,6 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
-import { useProtocolStore } from "@/store/useProtocolStore";
-
+import networkLinks from '@/store/protocolLink';
 // Define the expected structure of the topic data
 interface TopicData {
   title: string;
@@ -12,7 +11,7 @@ interface TopicData {
   }[];
 }
 
-const { protocol } = useProtocolStore();
+const BASE_URL = networkLinks["uniswap"];
 
 // Define the API route handler function
 export default async function handler(req: NextApiRequest, res: NextApiResponse<TopicData | { error: string }>) {
@@ -22,10 +21,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   // Make a request to the Uniswap forum API with the provided slug and id
   try {
     const response = await axios.get<TopicData>(
-      `${protocol.link}/t/${slug}/${id}.json`
+      `${BASE_URL}/t/${slug}/${id}.json`
     );
     const topicData = response.data;
-    console.log(topicData)
     // If the request is successful, send the topic data back to the client
     res.status(200).json(topicData);
   } catch (error: any) {
