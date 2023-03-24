@@ -1,6 +1,6 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
-
+import protocol from '@/store/protocolLink';
 // Define the expected structure of the topic data
 interface TopicData {
   title: string;
@@ -11,6 +11,7 @@ interface TopicData {
   }[];
 }
 
+
 // Define the API route handler function
 export default async function handler(req: NextApiRequest, res: NextApiResponse<TopicData | { error: string }>) {
   // Extract the slug and id from the request query
@@ -19,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   // Make a request to the Uniswap forum API with the provided slug and id
   try {
     const response = await axios.get<TopicData>(
-      `https://gov.uniswap.org/t/${slug}/${id}.json`
+      `${protocol["uniswap"]}/t/${slug}/${id}.json`
     );
     const topicData = response.data;
     // If the request is successful, send the topic data back to the client

@@ -5,10 +5,17 @@ interface TopicData {
   title: string;
   fancy_title: string;
   timeline_lookup: any;
-  posts: {
-    id: number;
-    cooked: string;
-  }[];
+  post_stream: {
+    posts: {
+      id: number;
+      name: string;
+      username: string;
+      avatar_template: string;
+      created_at: string;
+      cooked: string;
+      // Add more properties as needed
+    }[];
+  };
 }
 
 const TopicPage: React.FC = () => {
@@ -24,7 +31,7 @@ const TopicPage: React.FC = () => {
     fetchTopicData();
   }, [id, slug]);
 
-  console.log(topicData);
+  console.log(topicData)
 
   if (!topicData) {
     return <div>Loading...</div>;
@@ -32,11 +39,17 @@ const TopicPage: React.FC = () => {
 
   return (
     <div>
-      <h1></h1>
       <h1>{topicData.fancy_title}</h1>
-      {/* {topicData.timeline_lookup.map((post : any ) => (
-        <div key={post.id} dangerouslySetInnerHTML={{ __html: post.cooked }} />
-      ))} */}
+      {topicData?.post_stream?.posts.map((post) => (
+        <div key={post.id}>
+          <p>{post.name}</p>
+          <p>{post.username}</p>
+          <p>{post.created_at}</p>
+          <div dangerouslySetInnerHTML={{ __html: post.cooked }} /> {/* Render "cooked" data */}
+
+          {/* Render more properties as needed */}
+        </div>
+      ))}
     </div>
   );
 };

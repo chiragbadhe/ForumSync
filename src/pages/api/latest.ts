@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
-
+import protocol from '@/store/protocolLink';
 // Define the expected structure of the topic data
 interface Topic {
   id: number;
@@ -8,14 +8,19 @@ interface Topic {
   slug: string;
 }
 
-// Define the request handler for the API endpoint
+
+
+
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Topic[]>
 ) {
   try {
-    // Make a GET request to the forum's "latest" JSON endpoint
-    const response = await axios.get("https://gov.uniswap.org/latest.json");
+    const page = req.query.page || 0; // Default to page 1 if no page is specified
+    
+    // Make a GET request to the forum's "latest" JSON endpoint with the specified page number
+    const response = await axios.get(`${protocol["uniswap"]}/latest.json?page=${page}`);
     
     // Extract the array of topic objects from the response and type it as an array of Topic objects
     const latestTopics: Topic[] = response.data.topic_list.topics;
