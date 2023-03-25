@@ -13,7 +13,10 @@ type ProtocolStore = {
 const protocols: Protocol[] = [
   { name: 'uniswap', link: 'https://gov.uniswap.org/' },
   { name: 'aave', link: 'https://governance.aave.com/' },
-  { name: 'compound', link: 'https://compound.com' },
+  { name: 'compound', link: 'https://www.comp.xyz/' },
+  { name: 'optimism', link: 'https://gov.optimism.io/' },
+  { name: 'treasure', link: 'https://gov.treasure.lol/' },
+
 ];
 
 export const useProtocolStore = create<ProtocolStore>((set) => ({

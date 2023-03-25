@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useProtocolStore } from '@/store/useProtocolStore';
 
 interface TopicData {
   title: string;
@@ -22,9 +23,12 @@ const TopicPage: React.FC = () => {
   const router = useRouter();
   const { id, slug } = router.query;
   const [topicData, setTopicData] = useState<TopicData>();
+  const { protocol, setProtocol } = useProtocolStore();
+
+  
   useEffect(() => {
     const fetchTopicData = async () => {
-      const response = await fetch(`/api/topics?slug=${slug}&id=${id}`);
+      const response = await fetch(`/api/topics?slug=${slug}&id=${id}&protocol=${protocol.link}`);
       const topicData = await response.json();
       setTopicData(topicData);
     };

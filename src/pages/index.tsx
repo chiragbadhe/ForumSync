@@ -1,13 +1,13 @@
 import Head from 'next/head';
-import UniswapForum from '@/components/UniswapForum';
+import UniswapForum from '@/components/DiscourseForum';
 import { useProtocolStore } from '@/store/useProtocolStore';
+import Header from '@/components/Header';
 
 export default function Home() {
   const { protocol, setProtocol } = useProtocolStore();
 
   const handleClick = () => {
     console.log('Aave Clicked');
-
     setProtocol('aave');
     console.log('done');
   };
@@ -21,9 +21,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <Header />
         <div>
           <button onClick={() => setProtocol('aave')}>Aave</button>
           <button onClick={() => setProtocol('uniswap')}>Uniswap</button>
+          <button onClick={() => setProtocol('compound')}>Compound</button>
+          <button onClick={() => setProtocol('optimism')}>Optimism</button>
+          {/* <button onClick={() => setProtocol('treasure')}>Treasure</button> */}
+
           <a href={protocol.link} target="_blank" rel="noopener noreferrer">
             {protocol.name} {protocol.link}
           </a>
