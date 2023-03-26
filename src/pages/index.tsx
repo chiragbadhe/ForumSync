@@ -2,6 +2,7 @@ import Head from 'next/head';
 import UniswapForum from '@/components/DiscourseForum';
 import { useProtocolStore } from '@/store/useProtocolStore';
 import Header from '@/components/Header';
+import LeftSidebar from '@/components/LeftSidebar';
 
 export default function Home() {
   const { protocol, setProtocol } = useProtocolStore();
@@ -20,19 +21,19 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main className="">
         <Header />
-        <div>
-          <button onClick={() => setProtocol('aave')}>Aave</button>
+        <div className="container mx-auto mt-[30px] flex space-x-[30px]">
+          <LeftSidebar />
+          {/* <button onClick={() => setProtocol('aave')}>Aave</button>
           <button onClick={() => setProtocol('uniswap')}>Uniswap</button>
           <button onClick={() => setProtocol('compound')}>Compound</button>
           <button onClick={() => setProtocol('optimism')}>Optimism</button>
-          {/* <button onClick={() => setProtocol('treasure')}>Treasure</button> */}
-
           <a href={protocol.link} target="_blank" rel="noopener noreferrer">
             {protocol.name} {protocol.link}
-          </a>
+          </a> */}
           <UniswapForum />
+          <LeftSidebar />
         </div>
       </main>
     </>

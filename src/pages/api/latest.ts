@@ -14,10 +14,9 @@ export default async function handler(
   try {
     const page = req.query.page || 0; // Default to page 1 if no page is specified
     const protocol = req.query.protocol || "https://gov.uniswap.org/"; // Default to uniswap if no protocol is specified
-
     // Make a GET request to the forum's "latest" JSON endpoint with the specified page number and protocol
     const response = await axios.get(`${protocol}/latest.json?page=${page}`);
-    
+    console.log(response)
     // Extract the array of topic objects from the response and type it as an array of Topic objects
     const latestTopics: Topic[] = response.data.topic_list.topics;    
     // Send a 200 response with the array of topics as the response body

@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useProtocolStore } from '@/store/useProtocolStore';
 import axios from 'axios';
-import Toast, { ToastContext } from './Toast';
+import Toast, { ToastContext } from './ui/Toast';
+import TopicCard from './TopicCard';
 
 interface Topic {
   id: any;
-  views: number
-  pinned: boolean
+  views: number;
+  pinned: boolean;
   title: string;
   slug: string;
 }
@@ -78,7 +79,7 @@ const DiscourseForum: React.FC = () => {
         setLatestTopics((topics) => [...topics, ...response.data]);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       showErrorToast('An error occurred');
     }
   };
@@ -95,10 +96,10 @@ const DiscourseForum: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-100 py-8">
+    <div className="">
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-4">{} Forum</h2>
-
+        <h2 className="text-2xl font-bold mb-4">Uniswap Forum</h2>
+{/* 
         <div className="mb-4">
           <input
             type="text"
@@ -110,21 +111,26 @@ const DiscourseForum: React.FC = () => {
                 fetchSearchResults();
               }
             }}
-            className="border border-gray-400 rounded py-2 px-4 w-full"
+            className=""
           />
           <button onClick={() => fetchSearchResults()}>Search </button>
-        </div>
+        </div> */}
+
         {latestTopics.length > 0 ? (
           <ul>
             {latestTopics.map((topic, index) => (
-              <li key={`${index}-${topic.id}`} className="mb-2">
-                <a href={`${topic.slug}/${topic.id}`} className="hover:underline">
-                  {topic.title}
-                  {topic.views}
-                  {topic.pinned ? "pinned" : ""}
+              <>
+                <li key={`${index}-${topic.id}`} className="mb-2">
 
-                </a>
-              </li>
+                  <a href={`${topic.slug}/${topic.id}`} className="">
+                  <TopicCard children={undefined} title={topic.title}></TopicCard>
+
+                    {/* {topic.title}
+                    {topic.views}
+                    {topic.pinned ? 'pinned' : ''} */}
+                  </a>
+                </li>
+              </>
             ))}
           </ul>
         ) : (
