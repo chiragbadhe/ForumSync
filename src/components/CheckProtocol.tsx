@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import protocols from '@/utils/protocols.json';
+import { useProtocolStore } from '@/store/useProtocolStore';
+
 
 interface Protocol {
   name: string;
@@ -11,6 +13,8 @@ const CheckProtocol = () => {
   const [userInput, setUserInput] = useState<string>('');
   const [suggestedProtocols, setSuggestedProtocols] = useState<Protocol[]>([]);
   const [notFoundMessage, setNotFoundMessage] = useState<string>('');
+  const { protocol, setProtocol } = useProtocolStore();
+
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value.toLowerCase();
@@ -43,6 +47,7 @@ const CheckProtocol = () => {
   };
 
   const handleProtocolClick = (protocol: Protocol) => {
+    setProtocol(protocol.name)
     console.log(`${protocol.name} clicked`);
   };
 

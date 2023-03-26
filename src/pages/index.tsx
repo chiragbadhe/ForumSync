@@ -4,11 +4,15 @@ import { useProtocolStore } from '@/store/useProtocolStore';
 import Header from '@/components/Header';
 import LeftSidebar from '@/components/LeftSidebar';
 import RightSidebar from '@/components/RightSidebar';
-import CategoryTopics from "@/components/CategoryTopics"
+import CategoryTopics from '@/components/CategoryTopics';
 import CheckProtocol from '@/components/CheckProtocol';
+
+import { storeSlugAndId } from '@/store/useCategoryStore';
 
 export default function Home() {
   const { protocol, setProtocol } = useProtocolStore();
+
+  const { slug } = storeSlugAndId();
 
   const handleClick = () => {
     console.log('Aave Clicked');
@@ -33,13 +37,12 @@ export default function Home() {
           <button onClick={() => setProtocol('uniswap')}>Uniswap</button>
           <button onClick={() => setProtocol('compound')}>Compound</button>
           <button onClick={() => setProtocol('optimism')}>Optimism</button>
-          <a href={protocol.link} target="_blank" rel="noopener noreferrer">
-            {protocol.name} {protocol.link}
+          <a href={protocol.forumLink} target="_blank" rel="noopener noreferrer">
+            {protocol.name} {protocol.forumLink}
           </a> */}
-          {/* <UniswapForum /> */}
-          <CategoryTopics />
-          <RightSidebar />
+          {!slug ? <UniswapForum /> : <CategoryTopics />}
 
+          <RightSidebar />
         </div>
       </main>
     </>

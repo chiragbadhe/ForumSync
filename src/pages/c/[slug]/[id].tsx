@@ -29,17 +29,17 @@ const DiscourseForum: React.FC = () => {
 
   useEffect(() => {
     const fetchtopicsCategoryWise = async () => {
-      console.log('fetching for', protocol.link);
-      const response = await axios.get(`/api/categoriesarray?slug=${slug}&id=${id}&page=${page}&protocol=${protocol.link}`);
+      console.log('fetching for', protocol.forumLink);
+      const response = await axios.get(`/api/categoriesarray?slug=${slug}&id=${id}&page=${page}&protocol=${protocol.forumLink}`);
       console.log({ response });
-      if (protocol.link !== prevProtocolLink) {
+      if (protocol.forumLink !== prevProtocolLink) {
         // If protocol link has changed, reset the topics list
         setTopicCategoryWise(response.data);
       } else {
         // If protocol link is the same, append new topics to the list
         setTopicCategoryWise((topics) => [...topics, ...response.data]);
       }
-      setPrevProtocolLink(protocol.link);
+      setPrevProtocolLink(protocol.forumLink);
     };
     fetchtopicsCategoryWise();
   }, [page, protocol, prevProtocolLink, slug, id]);

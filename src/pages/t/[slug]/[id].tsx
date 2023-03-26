@@ -29,7 +29,7 @@ const TopicPage: React.FC = () => {
   useEffect(() => {
     const fetchTopicData = async () => {
         console.log("slug:", slug, "id:", id)
-      const response = await fetch(`/api/topics?slug=${slug}&id=${id}&protocol=${protocol.link}`);
+      const response = await fetch(`/api/topics?slug=${slug}&id=${id}&protocol=${protocol.forumLink}`);
       const topicData = await response.json();
       setTopicData(topicData);
     };

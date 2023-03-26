@@ -24,7 +24,7 @@ export default function Categories() {
 
   const { slug, id, setSlugAndId } = storeSlugAndId();
 
-  console.log(slug,id)
+  console.log(slug, id);
 
   const handleCategory = () => {
     // set the slug and id values
@@ -34,14 +34,14 @@ export default function Categories() {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const response = await axios.get(`/api/categories?protocol=${protocol.link}`);
+        const response = await axios.get(`/api/categories?protocol=${protocol.forumLink}`);
         setCategories(response.data.category_list.categories);
       } catch (error) {
         setError('Error fetching categories');
       }
     }
     fetchCategories();
-  }, []);
+  }, [protocol.forumLink]); // add protocol.forumLink as a dependency
 
   console.log(categories);
 
@@ -51,10 +51,10 @@ export default function Categories() {
 
   return (
     <div>
-      <h1>Uniswap Forum Categories</h1>
+      <h1>{protocol.name} Forum Categories</h1>
       {categories.map((category) => (
         <div key={category.id}>
-          <div onClick={() =>setSlugAndId(category.slug, category.id)}>
+          <div onClick={() => setSlugAndId(category.slug, category.id)}>
             <h2>{category.name}</h2>
             {/* <p>{category.id}</p>
           <p>{category.slug}</p> */}

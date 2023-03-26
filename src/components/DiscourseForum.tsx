@@ -25,17 +25,17 @@ const DiscourseForum: React.FC = () => {
 
   useEffect(() => {
     const fetchLatestTopics = async () => {
-      console.log('fetching for', protocol.link);
-      const response = await axios.get(`/api/latest?page=${page}&protocol=${protocol.link}`);
+      console.log('fetching for', protocol.forumLink);
+      const response = await axios.get(`/api/latest?page=${page}&protocol=${protocol.forumLink}`);
       console.log({ response });
-      if (protocol.link !== prevProtocolLink) {
+      if (protocol.forumLink !== prevProtocolLink) {
         // If protocol link has changed, reset the topics list
         setLatestTopics(response.data);
       } else {
         // If protocol link is the same, append new topics to the list
         setLatestTopics((topics) => [...topics, ...response.data]);
       }
-      setPrevProtocolLink(protocol.link);
+      setPrevProtocolLink(protocol.forumLink);
     };
     fetchLatestTopics();
   }, [page, protocol, prevProtocolLink]);
@@ -69,7 +69,7 @@ const DiscourseForum: React.FC = () => {
     console.log('button clicked');
     if (!searchQuery) return;
     try {
-      const response = await axios.get(`/api/search/?term=${searchQuery}&page=${page}&protocol=${protocol.link}`);
+      const response = await axios.get(`/api/search/?term=${searchQuery}&page=${page}&protocol=${protocol.forumLink}`);
       if (response.data.length === 0) {
         // No more results to load
         setAllResultsLoaded(true);
@@ -99,7 +99,7 @@ const DiscourseForum: React.FC = () => {
   return (
     <div className="">
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-4">Uniswap Forum</h2>
+        <h2 className="text-2xl font-bold mb-4">{protocol.name} Forum</h2>
 {/* 
         <div className="mb-4">
           <input
