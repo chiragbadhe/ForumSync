@@ -10,7 +10,7 @@ interface TopicCardProps {
 
 const TopicCard: React.FC<TopicCardProps> = ({ children, title, isLoading }) => {
   return (
-    <div className="w-full bg-gray-50 rounded-[7px] py-[30px] px-[30px] container flex mb-[20px] hover:shadow-md">
+    <div className="w-full bg-gray-50 rounded-[7px] py-[30px] px-[30px] container flex mb-[20px] hover:shadow-md border">
       <div className="flex flex-col items-center pr-[20px] opacity-50 justify-center">
         <ArrowUp />
         <p className="text-[20px] font-normal">56</p>

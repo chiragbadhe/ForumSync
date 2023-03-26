@@ -39,7 +39,6 @@ const DiscourseForum: React.FC = () => {
     };
     fetchLatestTopics();
   }, [page, protocol, prevProtocolLink]);
-  
 
   useEffect(() => {
     setPage(0); // Reset page number when search query changes
@@ -99,8 +98,8 @@ const DiscourseForum: React.FC = () => {
   return (
     <div className="">
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-4">{protocol.name} Forum</h2>
-{/* 
+        <p className="text-xl p-[10px] px-[15px] font-bold mb-4 bg-gray-100 rounded-[5px] border">{protocol.name} Forum</p>
+        {/* 
         <div className="mb-4">
           <input
             type="text"
@@ -122,13 +121,8 @@ const DiscourseForum: React.FC = () => {
             {latestTopics.map((topic, index) => (
               <>
                 <li key={`${index}-${topic.id}`} className="mb-2">
-
                   <a href={`t/${topic.slug}/${topic.id}`} className="">
-                  <TopicCard children={undefined} title={topic.title}></TopicCard>
-
-                    {/* {topic.title}
-                    {topic.views}
-                    {topic.pinned ? 'pinned' : ''} */}
+                    <TopicCard children={undefined} title={topic.title}></TopicCard>
                   </a>
                 </li>
               </>

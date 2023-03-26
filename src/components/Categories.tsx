@@ -45,23 +45,27 @@ export default function Categories() {
 
   console.log(categories);
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+  // if (error) {
+  //   return <div>{error}</div>;
+  // }
 
   return (
     <div>
-      <h1>{protocol.name} Forum Categories</h1>
       {categories.map((category) => (
-        <div key={category.id}>
-          <div onClick={() => setSlugAndId(category.slug, category.id)}>
-            <h2>{category.name}</h2>
-            {/* <p>{category.id}</p>
-          <p>{category.slug}</p> */}
-            <p>{category.description}</p>
-            <p>{category.topic_count}</p>
+        <>
+          <div key={category.id}>
+            <div onClick={() => setSlugAndId(category.slug, category.id)} className="flex my-[10px] hover:cursor-pointer">
+              <div>
+                <p className="text-[16px]">{category.name}</p>
+                <p className="text-[14px] opacity-50">{category.description}</p>
+              </div>
+              <div>
+                <p className="text-[14px] opacity-50">x{category.topic_count}</p>
+              </div>
+            </div>
+            <p className='border-b pt-[10px]'></p>
           </div>
-        </div>
+        </>
       ))}
     </div>
   );
