@@ -4,6 +4,8 @@ import { useProtocolStore } from '@/store/useProtocolStore';
 import Header from '@/components/Header';
 import LeftSidebar from '@/components/LeftSidebar';
 import RightSidebar from '@/components/RightSidebar';
+import CategoryTopics from "@/components/CategoryTopics"
+import CheckProtocol from '@/components/CheckProtocol';
 
 export default function Home() {
   const { protocol, setProtocol } = useProtocolStore();
@@ -24,6 +26,7 @@ export default function Home() {
       </Head>
       <main className="">
         <Header />
+        <CheckProtocol />
         <div className="container mx-auto mt-[30px] flex space-x-[30px]">
           <LeftSidebar />
           {/* <button onClick={() => setProtocol('aave')}>Aave</button>
@@ -33,7 +36,8 @@ export default function Home() {
           <a href={protocol.link} target="_blank" rel="noopener noreferrer">
             {protocol.name} {protocol.link}
           </a> */}
-          <UniswapForum />
+          {/* <UniswapForum /> */}
+          <CategoryTopics />
           <RightSidebar />
 
         </div>

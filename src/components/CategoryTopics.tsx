@@ -3,6 +3,7 @@ import { useProtocolStore } from '@/store/useProtocolStore';
 import axios from 'axios';
 import Toast, { ToastContext } from '@/components/ui/Toast';
 import TopicCard from '@/components/TopicCard';
+import { storeSlugAndId } from '@/store/useCategoryStore';
 
 interface Topic {
   id: any;
@@ -12,39 +13,40 @@ interface Topic {
   slug: string;
 }
 
-import { useRouter } from 'next/router';
-
 const DiscourseForum: React.FC = () => {
-  const router = useRouter();
-  const { slug, id } = router.query;
-
+  const { slug, id } = storeSlugAndId();
   const [topicsCategoryWise, setTopicCategoryWise] = useState<Topic[]>([]);
   const [page, setPage] = useState(0);
-  const [allResultsLoaded, setAllResultsLoaded] = useState(false);
   const loaderRef = useRef<HTMLDivElement>(null);
-  const { protocol, setProtocol } = useProtocolStore();
+  const { protocol } = useProtocolStore();
   const [prevProtocolLink, setPrevProtocolLink] = useState('');
+  const [prevSlug, setPrevSlug] = useState('');
 
   const { showErrorToast } = useContext(ToastContext);
+
 
   useEffect(() => {
     const fetchtopicsCategoryWise = async () => {
       console.log('fetching for', protocol.link);
-      const response = await axios.get(`/api/categoriesarray?slug=${slug}&id=${id}&page=${page}&protocol=${protocol.link}`);
+      const response = await axios.get(
+        `/api/categoriesarray?slug=${slug}&id=${id}&page=${page}&protocol=${protocol.link}`
+      );
       console.log({ response });
       if (protocol.link !== prevProtocolLink) {
         // If protocol link has changed, reset the topics list
+        setTopicCategoryWise(response.data);
+      } else if (slug !== prevSlug) {
         setTopicCategoryWise(response.data);
       } else {
         // If protocol link is the same, append new topics to the list
         setTopicCategoryWise((topics) => [...topics, ...response.data]);
       }
       setPrevProtocolLink(protocol.link);
+      setPrevSlug(slug);
     };
     fetchtopicsCategoryWise();
   }, [page, protocol, prevProtocolLink, slug, id]);
 
-  
   return (
     <div className="">
       <div className="container mx-auto px-4">

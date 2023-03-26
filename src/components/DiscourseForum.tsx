@@ -39,6 +39,7 @@ const DiscourseForum: React.FC = () => {
     };
     fetchLatestTopics();
   }, [page, protocol, prevProtocolLink]);
+  
 
   useEffect(() => {
     setPage(0); // Reset page number when search query changes
