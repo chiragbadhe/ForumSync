@@ -3,6 +3,7 @@ import UniswapForum from '@/components/DiscourseForum';
 import { useProtocolStore } from '@/store/useProtocolStore';
 import Header from '@/components/Header';
 import LeftSidebar from '@/components/LeftSidebar';
+import RightSidebar from '@/components/RightSidebar';
 
 export default function Home() {
   const { protocol, setProtocol } = useProtocolStore();
@@ -33,7 +34,8 @@ export default function Home() {
             {protocol.name} {protocol.link}
           </a> */}
           <UniswapForum />
-          <LeftSidebar />
+          <RightSidebar />
+
         </div>
       </main>
     </>

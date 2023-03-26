@@ -122,7 +122,7 @@ const DiscourseForum: React.FC = () => {
               <>
                 <li key={`${index}-${topic.id}`} className="mb-2">
 
-                  <a href={`${topic.slug}/${topic.id}`} className="">
+                  <a href={`t/${topic.slug}/${topic.id}`} className="">
                   <TopicCard children={undefined} title={topic.title}></TopicCard>
 
                     {/* {topic.title}

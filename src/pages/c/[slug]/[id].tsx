@@ -21,11 +21,10 @@ interface TopicData {
 
 const TopicPage: React.FC = () => {
   const router = useRouter();
-  const { id, slug } = router.query;
+  const { slug, id } = router.query;
   const [topicData, setTopicData] = useState<TopicData>();
   const { protocol, setProtocol } = useProtocolStore();
 
-  
   useEffect(() => {
     const fetchTopicData = async () => {
       const response = await fetch(`/api/topics?slug=${slug}&id=${id}&protocol=${protocol.link}`);
@@ -35,7 +34,7 @@ const TopicPage: React.FC = () => {
     fetchTopicData();
   }, [id, slug]);
 
-  console.log(topicData)
+  console.log(topicData);
 
   if (!topicData) {
     return <div>Loading...</div>;
@@ -50,7 +49,6 @@ const TopicPage: React.FC = () => {
           <p>{post.username}</p>
           <p>{post.created_at}</p>
           <div dangerouslySetInnerHTML={{ __html: post.cooked }} /> {/* Render "cooked" data */}
-
           {/* Render more properties as needed */}
         </div>
       ))}
