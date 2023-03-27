@@ -57,7 +57,9 @@ export default function Categories() {
             <div onClick={() => setSlugAndId(category.slug, category.id)} className="flex my-[10px] hover:cursor-pointer">
               <div>
                 <p className="text-[16px]">{category.name}</p>
-                <p className="text-[14px] opacity-50">{category.description}</p>
+                {/* <p className="text-[14px] opacity-50">{category.description} </p> */}
+                <p className="text-[14px] opacity-50" dangerouslySetInnerHTML={{ __html: category.description }} /> {/* Render "cooked" data */}
+
               </div>
               <div>
                 <p className="text-[14px] opacity-50">x{category.topic_count}</p>

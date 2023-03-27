@@ -1,8 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
 import { Button } from './ui/Button';
+import { useAuth } from '@/lib/useAuth';
 
 const Header: React.FC = () => {
+  const { user, signOut } = useAuth();
+
   return (
     <header>
       <div className="bg-gray-50 shadow-md">
@@ -22,8 +25,14 @@ const Header: React.FC = () => {
           </div>
 
           <div className="flex space-x-[10px]">
-            <Button>Login</Button>
-            <Button>Sign Up</Button>
+            {user ? (
+              <Button onClick={() => signOut()}>Logout</Button>
+            ) : (
+              <>
+                <Button>Login</Button>
+                <Button>Sign Up</Button>
+              </>
+            )}
           </div>
         </div>
       </div>

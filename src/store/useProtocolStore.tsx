@@ -2,8 +2,8 @@ import { create } from 'zustand';
 import protocols from '@/utils/protocols.json';
 
 type Protocol = {
-  forumLink: any;
   name: string;
+  forumLink: string;
 };
 
 type ProtocolStore = {

@@ -1,1 +1,14 @@
-[  {    "name": "Uniswap",    "forumLink": "https://gov.uniswap.org/"  },  {    "name": "Aave",    "forumLink": "https://governance.aave.com/"  },  {    "name": "Compound",    "forumLink": "https://www.comp.xyz/"  }]
+[
+    {
+      "name": "Uniswap",
+      "forumLink": "https://gov.uniswap.org/"
+    },
+    {
+      "name": "Aave",
+      "forumLink": "https://governance.aave.com/"
+    },
+    {
+      "name": "Compound",
+      "forumLink": "https://www.comp.xyz/"
+    }
+  ]

@@ -4,8 +4,12 @@ import { X } from 'lucide-react';
 import { useProtocolStore } from '@/store/useProtocolStore';
 
 interface Protocol {
-  name: string;
-  forumLink: string;
+  name?: any;
+  forumLink?: any;
+}
+
+interface CheckProtocolProps {
+  onProtocolClick?: (protocol: Protocol) => void;
 }
 
 interface CheckProtocolProps {
@@ -21,7 +25,8 @@ const CheckProtocol: React.FC<CheckProtocolProps> = ({ onProtocolClick }) => {
   const { protocol, setProtocol } = useProtocolStore();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const input = event.target.value.toLowerCase();
+    const input = (event.target.value || '').toLowerCase();
+    
     setUserInput(input);
 
     if (input === '') {
@@ -29,7 +34,9 @@ const CheckProtocol: React.FC<CheckProtocolProps> = ({ onProtocolClick }) => {
       return;
     }
 
-    const suggested = protocols.filter((protocol: Protocol) => protocol.name.toLowerCase().includes(input));
+
+
+    const suggested = protocols.filter((protocol: any) => protocol?.name?.toLowerCase()?.includes(input));
     setSuggestedProtocols(suggested);
   };
 
@@ -95,7 +102,7 @@ interface RightSidebarProps {
 
 const RightSidebar: React.FC<RightSidebarProps> = ({ onProtocolClick }) => {
   return (
-    <div className="w-1/3 bg-gray-50 h-full rounded-[7px] px-[20px] p-[15px] border">
+    <div className="w-1/3 bg-gray-50 h-auto rounded-[7px] px-[20px] p-[15px] border">
       <div>
         <p className="text-[20px] opacity-70">Subscriptions</p>
         <p className="border-b mt-[10px]"></p>
