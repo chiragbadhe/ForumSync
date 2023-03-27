@@ -3,11 +3,13 @@ import { useProtocolStore } from '@/store/useProtocolStore';
 import axios from 'axios';
 import Toast, { ToastContext } from './ui/Toast';
 
-import { storeSlugAndId } from '@/store/useCategoryStore';
+import ReactDOMServer from 'react-dom/server';
 
+
+import { storeSlugAndId } from '@/store/useCategoryStore';
 interface Category {
   topic_count: string;
-  description: ReactNode;
+  description: string;
   name: string;
   id: number;
   slug: string;
@@ -45,9 +47,9 @@ export default function Categories() {
 
   console.log(categories);
 
-  // if (error) {
-  //   return <div>{error}</div>;
-  // }
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div>
@@ -58,7 +60,7 @@ export default function Categories() {
               <div>
                 <p className="text-[16px]">{category.name}</p>
                 {/* <p className="text-[14px] opacity-50">{category.description} </p> */}
-                <p className="text-[14px] opacity-50" dangerouslySetInnerHTML={{ __html: category.description }} /> {/* Render "cooked" data */}
+                <p className="text-[14px] opacity-50" dangerouslySetInnerHTML={{ __html: category.description }} />
 
               </div>
               <div>
