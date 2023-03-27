@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useProtocolStore } from '@/store/useProtocolStore';
 import axios from 'axios';
-import Toast, { ToastContext } from './ui/Toast';
+import { ToastContext } from './ui/Toast';
 import TopicCard from './TopicCard';
 
 interface Topic {

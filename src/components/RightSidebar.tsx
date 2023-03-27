@@ -5,6 +5,7 @@ import { useProtocolStore } from '@/store/useProtocolStore';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
 import { UUID } from 'crypto';
+import { ToastContext } from './ui/Toast';
 
 interface Protocol {
   name?: any;
@@ -36,6 +37,8 @@ const CheckProtocol: React.FC<CheckProtocolProps> = ({ onProtocolClick }) => {
   const [suggestedProtocols, setSuggestedProtocols] = useState<Protocol[]>([]);
   const [notFoundMessage, setNotFoundMessage] = useState<string>('');
 
+  const { showErrorToast } = useContext(ToastContext);
+
   const { user } = useAuth();
 
   const { setProtocol } = useProtocolStore();
@@ -57,7 +60,10 @@ const CheckProtocol: React.FC<CheckProtocolProps> = ({ onProtocolClick }) => {
   const handleAddProtocol = async (protocol: Protocol) => {
     if (!selectedProtocols.find((p: Protocol) => p.name === protocol.name)) {
       // Store the protocol in Supabase
-      if (!user) throw new Error('User not authenticated');
+      if (!user) {
+        showErrorToast(!user ? 'User not authanticate' : '');
+        return;
+      }
 
       addProtocol(protocol.name, protocol.forumLink, user.id);
 
@@ -138,7 +144,7 @@ interface RightSidebarProps {
 
 const RightSidebar: React.FC<RightSidebarProps> = ({ onProtocolClick }) => {
   return (
-    <div className="w-1/3 bg-gray-50 h-auto rounded-[7px] px-[20px] p-[15px] border">
+    <div className="w-1/3 bg-gray-50 h-full rounded-[7px] px-[20px] p-[15px] border">
       <div>
         <p className="text-[20px] opacity-70">Subscriptions</p>
         <p className="border-b mt-[10px]"></p>
