@@ -25,9 +25,7 @@ const DiscourseForum: React.FC = () => {
 
   useEffect(() => {
     const fetchLatestTopics = async () => {
-      console.log('fetching for', protocol.forumLink);
       const response = await axios.get(`/api/latest?page=${page}&protocol=${protocol.forumLink}`);
-      console.log({ response });
       if (protocol.forumLink !== prevProtocolLink) {
         // If protocol link has changed, reset the topics list
         setLatestTopics(response.data);
@@ -65,7 +63,6 @@ const DiscourseForum: React.FC = () => {
   }, [searchQuery]);
 
   const fetchSearchResults = async () => {
-    console.log('button clicked');
     if (!searchQuery) return;
     try {
       const response = await axios.get(`/api/search/?term=${searchQuery}&page=${page}&protocol=${protocol.forumLink}`);
@@ -98,7 +95,9 @@ const DiscourseForum: React.FC = () => {
   return (
     <div className="">
       <div className="container mx-auto px-4">
-        <p className="text-xl p-[10px] px-[15px] font-bold mb-4 bg-gray-100 rounded-[5px] border">{protocol.name} Forum</p>
+        <p className="text-xl p-[10px] px-[15px] font-bold mb-4 bg-gray-100 rounded-[5px] border">
+          {protocol.name} Forum
+        </p>
         {/* 
         <div className="mb-4">
           <input
@@ -119,13 +118,11 @@ const DiscourseForum: React.FC = () => {
         {latestTopics.length > 0 ? (
           <ul>
             {latestTopics.map((topic, index) => (
-              <>
-                <li key={`${index}-${topic.id}`} className="mb-2">
-                  <a href={`t/${topic.slug}/${topic.id}`} className="">
-                    <TopicCard children={undefined} title={topic.title}></TopicCard>
-                  </a>
-                </li>
-              </>
+              <li key={`${index}-${topic.id}`} className="mb-2">
+                <a href={`t/${topic.slug}/${topic.id}`} className="">
+                  <TopicCard children={undefined} title={topic.title}></TopicCard>
+                </a>
+              </li>
             ))}
           </ul>
         ) : (

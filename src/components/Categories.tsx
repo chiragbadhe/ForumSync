@@ -5,7 +5,6 @@ import Toast, { ToastContext } from './ui/Toast';
 
 import ReactDOMServer from 'react-dom/server';
 
-
 import { storeSlugAndId } from '@/store/useCategoryStore';
 interface Category {
   topic_count: string;
@@ -26,8 +25,6 @@ export default function Categories() {
 
   const { slug, id, setSlugAndId } = storeSlugAndId();
 
-  console.log(slug, id);
-
   const handleCategory = () => {
     // set the slug and id values
     setSlugAndId('my-slug', 123);
@@ -45,8 +42,6 @@ export default function Categories() {
     fetchCategories();
   }, [protocol.forumLink]); // add protocol.forumLink as a dependency
 
-  console.log(categories);
-
   if (error) {
     return <div>{error}</div>;
   }
@@ -54,22 +49,19 @@ export default function Categories() {
   return (
     <div>
       {categories.map((category) => (
-        <>
-          <div key={category.id}>
-            <div onClick={() => setSlugAndId(category.slug, category.id)} className="flex my-[10px] hover:cursor-pointer">
-              <div>
-                <p className="text-[16px]">{category.name}</p>
-                {/* <p className="text-[14px] opacity-50">{category.description} </p> */}
-                <p className="text-[14px] opacity-50" dangerouslySetInnerHTML={{ __html: category.description }} />
-
-              </div>
-              <div>
-                <p className="text-[14px] opacity-50">x{category.topic_count}</p>
-              </div>
+        <div key={category.id}>
+          <div onClick={() => setSlugAndId(category.slug, category.id)} className="flex my-[10px] hover:cursor-pointer">
+            <div>
+              <p className="text-[16px]">{category.name}</p>
+              {/* <p className="text-[14px] opacity-50">{category.description} </p> */}
+              <p className="text-[14px] opacity-50" dangerouslySetInnerHTML={{ __html: category.description }} />
             </div>
-            <p className='border-b pt-[10px]'></p>
+            <div>
+              <p className="text-[14px] opacity-50">x{category.topic_count}</p>
+            </div>
           </div>
-        </>
+          <p className="border-b pt-[10px]"></p>
+        </div>
       ))}
     </div>
   );

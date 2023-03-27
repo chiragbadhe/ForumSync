@@ -2,9 +2,11 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from './ui/Button';
 import { useAuth } from '@/lib/useAuth';
+import { useRouter } from 'next/router';
 
 const Header: React.FC = () => {
   const { user, signOut } = useAuth();
+  const router = useRouter()
 
   return (
     <header>
@@ -19,9 +21,6 @@ const Header: React.FC = () => {
               className="py-[5px] px-[12px] text-[18px] bg-gray-100 rounded-[6px] border w-[400px] border-black/20"
               type="text"
             />
-            <button>
-              <img src="" alt="" />
-            </button>
           </div>
 
           <div className="flex space-x-[10px]">
@@ -29,7 +28,7 @@ const Header: React.FC = () => {
               <Button onClick={() => signOut()}>Logout</Button>
             ) : (
               <>
-                <Button>Login</Button>
+                <Button onClick={() => router.push("/signin") }>Login</Button>
                 <Button>Sign Up</Button>
               </>
             )}

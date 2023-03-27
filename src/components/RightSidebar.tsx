@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import protocols from '@/utils/protocols.json';
 import { X } from 'lucide-react';
 import { useProtocolStore } from '@/store/useProtocolStore';
+import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/lib/useAuth';
+import { UUID } from 'crypto';
 
 interface Protocol {
   name?: any;
@@ -16,17 +19,30 @@ interface CheckProtocolProps {
   onProtocolClick?: (protocol: Protocol) => void;
 }
 
+async function addProtocol(name: string, forumLink: string, userId: UUID) {
+  const { data, error } = await supabase
+    .from('user_protocols')
+    .insert([{ name, forumLink: forumLink, user_id: userId }]);
+  if (error) {
+    console.log(error.message);
+  } else {
+    console.log('Protocol added:', name);
+  }
+}
+
 const CheckProtocol: React.FC<CheckProtocolProps> = ({ onProtocolClick }) => {
   const [selectedProtocols, setSelectedProtocols] = useState<Protocol[]>([]);
   const [userInput, setUserInput] = useState<string>('');
   const [suggestedProtocols, setSuggestedProtocols] = useState<Protocol[]>([]);
   const [notFoundMessage, setNotFoundMessage] = useState<string>('');
 
-  const { protocol, setProtocol } = useProtocolStore();
+  const { user } = useAuth();
+
+  const { setProtocol } = useProtocolStore();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = (event.target.value || '').toLowerCase();
-    
+
     setUserInput(input);
 
     if (input === '') {
@@ -34,14 +50,18 @@ const CheckProtocol: React.FC<CheckProtocolProps> = ({ onProtocolClick }) => {
       return;
     }
 
-
-
     const suggested = protocols.filter((protocol: any) => protocol?.name?.toLowerCase()?.includes(input));
     setSuggestedProtocols(suggested);
   };
 
-  const handleAddProtocol = (protocol: Protocol) => {
+  const handleAddProtocol = async (protocol: Protocol) => {
     if (!selectedProtocols.find((p: Protocol) => p.name === protocol.name)) {
+      // Store the protocol in Supabase
+      if (!user) throw new Error('User not authenticated');
+
+      addProtocol(protocol.name, protocol.forumLink, user.id);
+
+      // Add the protocol to selectedProtocols state
       setSelectedProtocols([...selectedProtocols, protocol]);
       setNotFoundMessage('');
       setUserInput('');
@@ -49,9 +69,25 @@ const CheckProtocol: React.FC<CheckProtocolProps> = ({ onProtocolClick }) => {
     }
   };
 
-  const handleRemoveProtocol = (protocol: Protocol) => {
+  const handleRemoveProtocol = async (protocol: Protocol) => {
+    // Remove the protocol from the `selectedProtocols` state
     const updatedProtocols = selectedProtocols.filter((p: Protocol) => p.name !== protocol.name);
     setSelectedProtocols(updatedProtocols);
+
+    // Remove the protocol from the `user_protocols` table in Supabase
+    if (!user) throw new Error('User not authenticated');
+
+    const { error, data } = await supabase
+      .from('user_protocols')
+      .delete()
+      .eq('user_id', user.id)
+      .eq('name', protocol.name);
+
+    if (error) {
+      console.error(error);
+    } else {
+      console.log('Protocol removed:', protocol);
+    }
   };
 
   const handleProtocolClick = (protocol: Protocol) => {

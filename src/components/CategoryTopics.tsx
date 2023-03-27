@@ -27,11 +27,9 @@ const DiscourseForum: React.FC = () => {
 
   useEffect(() => {
     const fetchtopicsCategoryWise = async () => {
-      console.log('fetching for', protocol.forumLink);
       const response = await axios.get(
         `/api/categoriesarray?slug=${slug}&id=${id}&page=${page}&protocol=${protocol.forumLink}`
       );
-      console.log({ response });
       if (protocol.forumLink !== prevProtocolLink) {
         // If protocol link has changed, reset the topics list
         setTopicCategoryWise(response.data);

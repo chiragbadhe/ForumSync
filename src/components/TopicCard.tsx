@@ -25,7 +25,7 @@ const TopicCard: React.FC<TopicCardProps> = ({ children, title, isLoading }) => 
         <p className="border-b my-[13px] "></p>
         <div className="flex justify-between text-[14px] opacity-50">
           <p>
-            <img src="/img" alt="" />
+            <img src="#" alt="" />
             <span>Posted By: Jon Doe</span>
           </p>
           <p className="flex items-center space-x-[5px]">

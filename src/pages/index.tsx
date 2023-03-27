@@ -7,17 +7,31 @@ import RightSidebar from '@/components/RightSidebar';
 import CategoryTopics from '@/components/CategoryTopics';
 
 import { storeSlugAndId } from '@/store/useCategoryStore';
+import { useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/lib/useAuth';
 
 export default function Home() {
-  const { protocol, setProtocol } = useProtocolStore();
-
+  const { user } = useAuth();
   const { slug } = storeSlugAndId();
 
-  const handleClick = () => {
-    console.log('Aave Clicked');
-    setProtocol('aave');
-    console.log('done');
-  };
+  async function getProtocols() {
+    if (!user) return;
+  
+    const { data, error } = await supabase
+      .from('user_protocols')
+      .select('*')
+      .eq('user_id', user.id);
+  
+    if (error) {
+      console.error(error);
+      return;
+    }
+  
+    console.log('protocols', data);
+  }
+  
+  getProtocols();
 
   return (
     <>
@@ -31,15 +45,7 @@ export default function Home() {
         <Header />
         <div className="container mx-auto mt-[30px] flex space-x-[30px]">
           <LeftSidebar />
-          {/* <button onClick={() => setProtocol('aave')}>Aave</button>
-          <button onClick={() => setProtocol('uniswap')}>Uniswap</button>
-          <button onClick={() => setProtocol('compound')}>Compound</button>
-          <button onClick={() => setProtocol('optimism')}>Optimism</button>
-          <a href={protocol.forumLink} target="_blank" rel="noopener noreferrer">
-            {protocol.name} {protocol.forumLink}
-          </a> */}
           {!slug ? <UniswapForum /> : <CategoryTopics />}
-
           <RightSidebar />
         </div>
       </main>
