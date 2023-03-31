@@ -24,11 +24,7 @@ export default async function handler(
       `${protocol}/search.json?q=${term}&page=0`
     );
 
-    const searchResults: SearchResult[] = response.data.topics.map((topic) => ({
-      id: topic.id,
-      title: topic.title,
-      slug: topic.slug
-    }));
+    const searchResults: SearchResult[] = response.data.topics
 
     res.status(200).json(searchResults);
   } catch (error: any) {

@@ -26,6 +26,7 @@ async function addProtocol(name: string, forumLink: string, userId: UUID) {
     .insert([{ name, forumLink: forumLink, user_id: userId }]);
   if (error) {
     console.log(error.message);
+  
   } else {
     console.log('Protocol added:', name);
   }
@@ -69,6 +70,9 @@ const CheckProtocol: React.FC<CheckProtocolProps> = ({ onProtocolClick }) => {
 
       // Add the protocol to selectedProtocols state
       setSelectedProtocols([...selectedProtocols, protocol]);
+
+      showSucessToast("user added");
+
       setNotFoundMessage('');
       setUserInput('');
       setSuggestedProtocols(suggestedProtocols.filter((p) => p.name !== protocol.name));
@@ -144,16 +148,21 @@ interface RightSidebarProps {
 
 const RightSidebar: React.FC<RightSidebarProps> = ({ onProtocolClick }) => {
   return (
-    <div className="w-1/3 bg-gray-50 h-full rounded-[7px] px-[20px] p-[15px] border">
+    <div className="w-1/3 fixed right-0 relative bg-gray-50 h-full rounded-[7px] px-[20px] p-[15px] border">
       <div>
         <p className="text-[20px] opacity-70">Subscriptions</p>
         <p className="border-b mt-[10px]"></p>
       </div>
       <div>
         <CheckProtocol onProtocolClick={onProtocolClick} />
+        
       </div>
     </div>
   );
 };
 
 export default RightSidebar;
+function showSucessToast(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+

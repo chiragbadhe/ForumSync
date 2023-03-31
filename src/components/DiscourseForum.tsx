@@ -5,6 +5,11 @@ import { ToastContext } from './ui/Toast';
 import TopicCard from './TopicCard';
 
 interface Topic {
+  last_poster_username: string;
+  created_at: string;
+  like_count: any;
+  excerpt: string;
+  posts_count: number;
   id: any;
   views: number;
   pinned: boolean;
@@ -42,6 +47,8 @@ const DiscourseForum: React.FC = () => {
     setPage(0); // Reset page number when search query changes
     setAllResultsLoaded(false); // Reset allResultsLoaded flag
   }, [searchQuery]);
+
+  console.log(latestTopics)
 
   useEffect(() => {
     const options = {
@@ -120,7 +127,7 @@ const DiscourseForum: React.FC = () => {
             {latestTopics.map((topic, index) => (
               <li key={`${index}-${topic.id}`} className="mb-2">
                 <a href={`t/${topic.slug}/${topic.id}`} className="">
-                  <TopicCard children={undefined} title={topic.title}></TopicCard>
+                  <TopicCard title={topic.title} views={topic.views} posts_count={topic.posts_count} excerpt={topic.excerpt} like_count={topic.like_count} createdAt={topic.created_at} last_posted_by={topic.last_poster_username} isLoading={latestTopics.length > 0 ? true : false} ></TopicCard>
                 </a>
               </li>
             ))}

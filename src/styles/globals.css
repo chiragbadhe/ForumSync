@@ -1,3 +1,75 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Style for p elements */
+div.post p {
+  font-size: 15px;
+  line-height: 1.4;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Style for links in p elements */
+div.post p a {
+  color: #0070f3;
+  text-decoration: none;
+  border-bottom: 1px solid #0070f3;
+}
+
+div.post svg {
+    display:none;
+    font-size: 10px;
+  }
+
+/* Style for ul elements */
+div.post ul {
+  margin: 0;
+  padding-left: 35px;
+  list-style: disc;
+}
+
+div.post img {
+    justify-content: center;
+    align-items: center;
+    flex: auto;
+    width: 100vh;
+  }
+
+  div.post img.emoji{
+    width: 15px;
+    display: inline-block
+  }
+
+  div.post img.avatar{
+    border-radius: 100px;
+    max-width: 30px;
+    display: inline-block
+  }
+
+  .post .quote {
+    border-left: 3px solid #ccc;
+    border-right: 3px solid #ccc;
+    border-radius: 5px;
+    margin: 1em 0;
+    padding: 0.5em 1em;
+  }
+
+  div.title {
+    font-size: 15px;
+  }
+
+  blockquote {
+    font-size: 15px;
+
+  }
+
+
+
+/* Style for li elements inside ul elements */
+div.post li {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+  margin-bottom: 10px;
+}

@@ -5,6 +5,8 @@ interface Auth {
   user: any;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
+  withGoogle: () => Promise<void>;
+  withGitHub: () => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -36,6 +38,17 @@ export const useAuth = (): Auth => {
     if (error) throw error;
   };
 
+  const withGoogle = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({ provider: "google" });
+    if (error) throw error;
+  };
+
+  const withGitHub = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({ provider: "github" });
+    if (error) throw error;
+  };
+
+
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
@@ -46,5 +59,7 @@ export const useAuth = (): Auth => {
     signIn,
     signUp,
     signOut,
-  } as Auth;
+    withGoogle,
+    withGitHub
+  } as unknown as Auth;
 };

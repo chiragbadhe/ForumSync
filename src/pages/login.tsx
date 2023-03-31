@@ -3,12 +3,12 @@ import { useRouter } from 'next/router';
 import { useAuth } from '@/lib/useAuth';
 import { Button } from '@/components/ui/Button';
 
-const SignIn = () => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
-  const { signIn } = useAuth();
+  const { signIn, withGitHub, withGoogle } = useAuth();
 
   const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -20,11 +20,29 @@ const SignIn = () => {
     }
   };
 
+  const handleWithGitHub = async () => {
+    console.log('Github Auth');
+    try {
+      await withGitHub();
+    } catch (error) {
+      setError('error');
+    }
+  };
+
+  const handleWithGoogle =  () => {
+    console.log('Google Auth');
+    try {
+       withGoogle();
+    } catch (error) {
+      setError('error');
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+      <div className="max-w-xs w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
+          <h2 className="mt-6 text-center text-2xl font-bold text-gray-900">Sign in to your account</h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSignIn}>
           <input type="hidden" name="remember" defaultValue="true" />
@@ -39,7 +57,7 @@ const SignIn = () => {
                 type="email"
                 autoComplete="email"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="border relative block w-full px-3 py-2 sm:text-sm rounded-[5px]"
                 placeholder="Email address"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
@@ -55,14 +73,14 @@ const SignIn = () => {
                 type="password"
                 autoComplete="current-password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="border relative block w-full px-3 py-2 sm:text-sm rounded-[5px]"
                 placeholder="Password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
               />
             </div>
 
-            <Button>Sign In</Button>
+            <Button className="w-full">Sign In</Button>
           </div>
 
           {error && <div className="text-red-500">{error}</div>}
@@ -81,15 +99,34 @@ const SignIn = () => {
             </div>
 
             <div className="text-sm">
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <a href="#" className="font-medium text-gray-600 hover:text-gray-500">
                 Forgot your password?
               </a>
             </div>
           </div>
         </form>
+
+        <div className="space-y-[10px]">
+          <p className="border-t pt-[10px]"></p>
+
+          <Button isLoading={false} onClick={() => handleWithGoogle()} className="w-full">
+            SignUp With Google
+          </Button>
+
+          <Button isLoading={false} onClick={() => handleWithGitHub()} className="w-full">
+            SignUp With Github
+          </Button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default SignIn;
+export default Login;
+function withGitHub() {
+  throw new Error('Function not implemented.');
+}
+
+function withGoogle() {
+  throw new Error('Function not implemented.');
+}

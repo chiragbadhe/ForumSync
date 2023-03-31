@@ -43,9 +43,12 @@ export default function Home() {
       </Head>
       <main className="">
         <Header />
-        <div className="container mx-auto mt-[30px] flex space-x-[30px]">
+        <div className="container mx-auto mt-[30px] flex space-x-[10px]">
           <LeftSidebar />
+          <div className='w-full'>
           {!slug ? <UniswapForum /> : <CategoryTopics />}
+          </div>
+        
           <RightSidebar />
         </div>
       </main>

@@ -50,17 +50,17 @@ export default function Categories() {
     <div>
       {categories.map((category) => (
         <div key={category.id}>
-          <div onClick={() => setSlugAndId(category.slug, category.id)} className="flex my-[10px] hover:cursor-pointer">
+          <div onClick={() => setSlugAndId(category.slug, category.id)} className="flex my-[10px] hover:cursor-pointer justify-between ">
             <div>
               <p className="text-[16px]">{category.name}</p>
               {/* <p className="text-[14px] opacity-50">{category.description} </p> */}
               <p className="text-[14px] opacity-50" dangerouslySetInnerHTML={{ __html: category.description }} />
             </div>
             <div>
-              <p className="text-[14px] opacity-50">x{category.topic_count}</p>
+              <p className="text-[13px] opacity-50">x{category.topic_count}</p>
             </div>
           </div>
-          <p className="border-b pt-[10px]"></p>
+          <p className="border-b"></p>
         </div>
       ))}
     </div>

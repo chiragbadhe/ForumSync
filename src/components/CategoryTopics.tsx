@@ -6,6 +6,11 @@ import TopicCard from '@/components/TopicCard';
 import { storeSlugAndId } from '@/store/useCategoryStore';
 
 interface Topic {
+  excerpt: string;
+  created_at: string;
+  last_poster_username: string;
+  like_count: number;
+  posts_count: number;
   id: any;
   views: number;
   pinned: boolean;
@@ -23,7 +28,6 @@ const DiscourseForum: React.FC = () => {
   const [prevSlug, setPrevSlug] = useState('');
 
   const { showErrorToast } = useContext(ToastContext);
-
 
   useEffect(() => {
     const fetchtopicsCategoryWise = async () => {
@@ -55,7 +59,15 @@ const DiscourseForum: React.FC = () => {
               <>
                 <li key={`${index}-${topic.id}`} className="mb-2">
                   <a href={`t/${topic.slug}/${topic.id}`} className="">
-                    <TopicCard children={undefined} title={topic.title}></TopicCard>
+                    <TopicCard
+                      title={topic.title}
+                      views={topic.views}
+                      posts_count={topic.posts_count}
+                      excerpt={topic.excerpt}
+                      like_count={topic.like_count}
+                      createdAt={topic.created_at}
+                      last_posted_by={topic.last_poster_username}
+                    ></TopicCard>
                   </a>
                 </li>
               </>
