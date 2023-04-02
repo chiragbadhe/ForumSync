@@ -127,7 +127,7 @@ const DiscourseForum: React.FC = () => {
             {latestTopics.map((topic, index) => (
               <li key={`${index}-${topic.id}`} className="mb-2">
                 <a href={`t/${topic.slug}/${topic.id}`} className="">
-                  <TopicCard title={topic.title} views={topic.views} posts_count={topic.posts_count} excerpt={topic.excerpt} like_count={topic.like_count} createdAt={topic.created_at} last_posted_by={topic.last_poster_username} isLoading={latestTopics.length > 0 ? true : false} ></TopicCard>
+                  <TopicCard title={topic.title} views={topic.views} posts_count={topic.posts_count} excerpt={topic.excerpt} like_count={topic.like_count} createdAt={topic.created_at} last_posted_by={topic.last_poster_username} isLoading={latestTopics.length > 0 ? true : false}></TopicCard>
                 </a>
               </li>
             ))}
