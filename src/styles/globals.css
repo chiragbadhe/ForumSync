@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  font-family: 'Nunito', sans-serif;
+}
+
 /* Style for p elements */
 div.post p {
   font-size: 15px;
